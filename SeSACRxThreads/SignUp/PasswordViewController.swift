@@ -16,7 +16,7 @@ class PasswordViewController: UIViewController {
     let nextButton = PointButton(title: "다음")
 
     let disposeBag = DisposeBag()
-    lazy var passwordObservable = Observable.just(passwordTextField.text)
+//    lazy var passwordObservable = Observable.just(passwordTextField.text)
     let nextButtonObservable = BehaviorSubject(value: false) // 이벤트를 주기만?
     let nextButtonColor = BehaviorSubject(value: UIColor.gray)
     
@@ -34,7 +34,7 @@ class PasswordViewController: UIViewController {
                 guard let text else { return }
                 if text.count < 16 && text.count > 6 {
                     owner.nextButtonObservable.onNext(true)
-                    owner.nextButtonColor.onNext(.green)
+                    owner.nextButtonColor.onNext(.systemGreen)
                 } else {
                     owner.nextButtonObservable.onNext(false)
                     owner.nextButtonColor.onNext(.gray)
