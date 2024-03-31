@@ -136,7 +136,6 @@
 				0412802E2AEF9BAC00972552 /* LaunchScreen.storyboard */,
 				041280312AEF9BAC00972552 /* Info.plist */,
 				041280772AF1D14000972552 /* Resource.swift */,
-				8B428B5B2BB9BAE300FD1B69 /* SampleViewController.swift */,
 			);
 			path = SeSACRxThreads;
 			sourceTree = "<group>";
@@ -191,6 +190,7 @@
 				0412806E2AEFAD2D00972552 /* BirthdayViewController.swift */,
 				041280702AEFAD3D00972552 /* PhoneViewController.swift */,
 				041280722AEFAD4B00972552 /* NicknameViewController.swift */,
+				8B428B5B2BB9BAE300FD1B69 /* SampleViewController.swift */,
 			);
 			path = SignUpOptional;
 			sourceTree = "<group>";

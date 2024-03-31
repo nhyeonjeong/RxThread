@@ -37,7 +37,7 @@ class PhoneViewController: UIViewController {
         phoneTextField.rx.text
             .bind(with: self) { owner, value in
                 guard let value else {return}
-                guard let intValue = Int(value) else { return }
+                guard let _ = Int(value) else { return }
                 if value.count > 10 {
                     owner.nextButtonObservable.onNext(true)
                     owner.nextButtonColor.onNext(.systemGreen)
