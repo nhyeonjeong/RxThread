@@ -7,8 +7,16 @@
  
 import UIKit
 import SnapKit
+import RxSwift
+import RxCocoa
 
 class BirthdayViewController: UIViewController {
+    let year = PublishSubject<Int>()
+    let month = PublishSubject<Int>()
+    let day = PublishSubject<Int>()
+    let infoObservable = PublishSubject<Bool>()
+    let nextButtonObservable = PublishSubject<Bool>()
+    let disposeBag = DisposeBag()
     
     let birthDayPicker: UIDatePicker = {
         let picker = UIDatePicker()
@@ -72,8 +80,69 @@ class BirthdayViewController: UIViewController {
         view.backgroundColor = Color.white
         
         configureLayout()
-        
+        bind()
         nextButton.addTarget(self, action: #selector(nextButtonClicked), for: .touchUpInside)
+    }
+    func bind() {
+        year
+            .map{ "\($0)년"}
+            .bind(to: yearLabel.rx.text)
+            .disposed(by: disposeBag)
+        
+        month
+            .map{ "\($0)월"}
+            .bind(to: monthLabel.rx.text)
+            .disposed(by: disposeBag)
+        
+        day
+            .map{ "\($0)일"}
+            .bind(to: dayLabel.rx.text)
+            .disposed(by: disposeBag)
+        
+        // infoLabel
+        infoObservable
+            .bind(with: self, onNext: { owner, value in
+                
+                owner.infoLabel.text = value ? "가입 가능한 나이입니다" : "만 17세 이상만 가입 가능합니다"
+                owner.infoLabel.textColor = value ? .systemBlue : .systemRed
+                
+            })
+            .disposed(by: disposeBag)
+        
+        nextButtonObservable
+            .bind(with: self) { owner, value in
+                owner.nextButton.isEnabled = value
+                owner.nextButton.backgroundColor = value ? .systemBlue : .lightGray
+            }
+            .disposed(by: disposeBag)
+        
+        birthDayPicker.rx.date
+            .bind(with: self) { owner, date in
+                let component = Calendar.current.dateComponents([.year, .month, .day], from: date)
+                owner.year.onNext(component.year!)
+                owner.month.onNext(component.month!)
+                owner.day.onNext(component.day!)
+                
+            
+                // 만 17세 계산
+                let today = Calendar.current.startOfDay(for: Date())
+                let todayComponent = Calendar.current.dateComponents([.year], from: date, to: today)
+                if todayComponent.year! < 17 {
+                    owner.infoObservable.onNext(false)
+                    owner.nextButtonObservable.onNext(false)
+                } else {
+                    owner.infoObservable.onNext(true)
+                    owner.nextButtonObservable.onNext(true)
+                }
+            }
+            .disposed(by: disposeBag)
+        
+        nextButton.rx.tap
+            .bind(with: self) { owner, _ in
+                owner.navigationController?.pushViewController(SampleViewController(), animated: true)
+            }
+            .disposed(by: disposeBag)
+        
     }
     
     @objc func nextButtonClicked() {
