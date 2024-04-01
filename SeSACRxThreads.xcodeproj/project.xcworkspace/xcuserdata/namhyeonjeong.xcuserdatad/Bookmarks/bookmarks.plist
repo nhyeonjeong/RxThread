@@ -12,13 +12,13 @@
 					<key>EndingColumnNumber</key>
 					<string>0</string>
 					<key>EndingLineNumber</key>
-					<string>67</string>
+					<string>69</string>
 					<key>StartingColumnNumber</key>
 					<string>0</string>
 					<key>StartingLineNumber</key>
-					<string>66</string>
+					<string>68</string>
 					<key>Timestamp</key>
-					<string>733673720.839618</string>
+					<string>733675943.056756</string>
 				</dict>
 				<key>rebasable-url</key>
 				<dict>
@@ -43,7 +43,7 @@
 				<key>trailing</key>
 				<string>            .subscribe(with: self) { owner, value in // value는 searchBar의 텍스트
                 print("실시간 검색 \(value)")
-                let result = value.isEmpty ? owner.data : owner.data.filter { $0.contains(value)}
+                let result = value.isEmpty ? owner.viewModel.data : owner.viewModel.data.filter { $0.contains(value)}
 </string>
 			</dict>
 			<key>title</key>
@@ -59,13 +59,13 @@
 					<key>EndingColumnNumber</key>
 					<string>0</string>
 					<key>EndingLineNumber</key>
-					<string>66</string>
+					<string>68</string>
 					<key>StartingColumnNumber</key>
-					<string>70</string>
+					<string>0</string>
 					<key>StartingLineNumber</key>
-					<string>65</string>
+					<string>67</string>
 					<key>Timestamp</key>
-					<string>733673727.250764</string>
+					<string>733675943.056728</string>
 				</dict>
 				<key>rebasable-url</key>
 				<dict>
@@ -81,12 +81,12 @@
 			<key>text-context</key>
 			<dict>
 				<key>focused</key>
-				<string>
+				<string>            .debounce(.seconds(1), scheduler: MainScheduler.instance)
 </string>
 				<key>leading</key>
 				<string>        // 서치바 텍스트가 포함된 결과를 테이블뷰에 보여주기(filter)
         searchBar.rx.text.orEmpty // 옵셔널 벗기고~
-            .debounce(.seconds(1), scheduler: MainScheduler.instance)</string>
+</string>
 				<key>trailing</key>
 				<string>            .distinctUntilChanged()
             .subscribe(with: self) { owner, value in // value는 searchBar의 텍스트
@@ -95,6 +95,53 @@
 			</dict>
 			<key>title</key>
 			<string>debounce가 꼭 먼저 와야 되는 이유???</string>
+			<key>type</key>
+			<string>bookmark</string>
+		</dict>
+		<dict>
+			<key>destination</key>
+			<dict>
+				<key>location-parameters</key>
+				<dict>
+					<key>EndingColumnNumber</key>
+					<string>0</string>
+					<key>EndingLineNumber</key>
+					<string>60</string>
+					<key>StartingColumnNumber</key>
+					<string>25</string>
+					<key>StartingLineNumber</key>
+					<string>59</string>
+					<key>Timestamp</key>
+					<string>733675952.947208</string>
+				</dict>
+				<key>rebasable-url</key>
+				<dict>
+					<key>base</key>
+					<string>workspace</string>
+					<key>payload</key>
+					<dict>
+						<key>relative-path</key>
+						<string>SeSACRxThreads/Search/SearchViewController.swift</string>
+					</dict>
+				</dict>
+			</dict>
+			<key>text-context</key>
+			<dict>
+				<key>focused</key>
+				<string>y...
+</string>
+				<key>leading</key>
+				<string>        Observable.zip(tableView.rx.itemSelected, tableView.rx.modelSelected(String.self))
+            .bind(with: self) { owner, value in
+                // 오류??wh</string>
+				<key>trailing</key>
+				<string>//                owner.viewModel.data.remove(at: value.0.row)
+//                owner.viewModel.items.onNext(owner.data)
+            }
+</string>
+			</dict>
+			<key>title</key>
+			<string>viewModel을 해줬는데도 오류나느 이유를 모르겠다.</string>
 			<key>type</key>
 			<string>bookmark</string>
 		</dict>

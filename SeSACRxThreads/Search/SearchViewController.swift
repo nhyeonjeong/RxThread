@@ -12,6 +12,8 @@ import RxCocoa
 
 class SearchViewController: UIViewController {
 
+    let viewModel = SearchViewModel()
+    
     private let tableView: UITableView = {
         let view = UITableView()
         view.register(SearchTableViewCell.self, forCellReuseIdentifier: SearchTableViewCell.identifier)
@@ -22,8 +24,7 @@ class SearchViewController: UIViewController {
     }()
     
     let searchBar = UISearchBar()
-    var data = ["A", "B", "C", "AB", "D", "ABC", "BBB", "EC", "SA", "AAAB", "ED", "F", "G", "H"]
-    lazy var items = BehaviorSubject(value: data)
+    
     let disposeBag = DisposeBag()
     
     override func viewDidLoad() {
@@ -36,7 +37,7 @@ class SearchViewController: UIViewController {
     }
     
     func bind() {
-        items
+        viewModel.items
             .bind(to: tableView.rx.items(cellIdentifier: SearchTableViewCell.identifier, cellType: SearchTableViewCell.self)) { (row, element, cell) in
                 
                 cell.appNameLabel.text = "테스트 \(element)"
@@ -56,8 +57,9 @@ class SearchViewController: UIViewController {
         // 셀 눌렀을 때 삭제
         Observable.zip(tableView.rx.itemSelected, tableView.rx.modelSelected(String.self))
             .bind(with: self) { owner, value in
-                owner.data.remove(at: value.0.row)
-                owner.items.onNext(owner.data)
+                // 오류??why...
+//                owner.viewModel.data.remove(at: value.0.row)
+//                owner.viewModel.items.onNext(owner.data)
             }
             .disposed(by: disposeBag)
         
@@ -67,8 +69,8 @@ class SearchViewController: UIViewController {
             .distinctUntilChanged()
             .subscribe(with: self) { owner, value in // value는 searchBar의 텍스트
                 print("실시간 검색 \(value)")
-                let result = value.isEmpty ? owner.data : owner.data.filter { $0.contains(value)}
-                owner.items.onNext(result)
+                let result = value.isEmpty ? owner.viewModel.data : owner.viewModel.data.filter { $0.contains(value)}
+                owner.viewModel.items.onNext(result)
             }
             .disposed(by: disposeBag)
         // 키보드 return을 눌러도 서치
@@ -77,21 +79,19 @@ class SearchViewController: UIViewController {
             .distinctUntilChanged()
             .subscribe(with: self) { owner, value in
                 print("검색 버튼 클릭(return) \(value)")
-                let result = value.isEmpty ? owner.data : owner.data.filter { $0.contains(value) }
-                owner.items.onNext(result)
+                let result = value.isEmpty ? owner.viewModel.data : owner.viewModel.data.filter { $0.contains(value) }
+                owner.viewModel.items.onNext(result)
             }
             .disposed(by: disposeBag)
     }
     func setSearchController() {
-        view.addSubview(searchBar)
-        navigationItem.titleView = searchBar
-//        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "추가", style: .plain, target: self, action: #selector(plusButtonClicked))
+//        view.addSubview(searchBar)
+//        navigationItem.titleView = searchBar
+        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "추가", style: .plain, target: self, action: #selector(plusButtonClicked))
     }
     
     @objc func plusButtonClicked() {
-        let sample = ["a", "b", "C", "d", "e"]
-        data.append(sample.randomElement()!)
-        items.onNext(data)
+        viewModel.plustButtonSubject.onNext(()) // ?
     }
     
     func configure() {

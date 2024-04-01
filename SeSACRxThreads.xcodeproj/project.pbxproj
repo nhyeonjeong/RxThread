@@ -31,6 +31,7 @@
 		8B428B5C2BB9BAE300FD1B69 /* SampleViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B428B5B2BB9BAE300FD1B69 /* SampleViewController.swift */; };
 		8B428B642BBAEEE800FD1B69 /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B428B632BBAEEE800FD1B69 /* SearchViewController.swift */; };
 		8B428B662BBAEF0E00FD1B69 /* SearchTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B428B652BBAEF0E00FD1B69 /* SearchTableViewCell.swift */; };
+		8B428B682BBAF97800FD1B69 /* SearchViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B428B672BBAF97800FD1B69 /* SearchViewModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -76,6 +77,7 @@
 		8B428B5B2BB9BAE300FD1B69 /* SampleViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SampleViewController.swift; sourceTree = "<group>"; };
 		8B428B632BBAEEE800FD1B69 /* SearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewController.swift; sourceTree = "<group>"; };
 		8B428B652BBAEF0E00FD1B69 /* SearchTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchTableViewCell.swift; sourceTree = "<group>"; };
+		8B428B672BBAF97800FD1B69 /* SearchViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -205,6 +207,7 @@
 			children = (
 				8B428B632BBAEEE800FD1B69 /* SearchViewController.swift */,
 				8B428B652BBAEF0E00FD1B69 /* SearchTableViewCell.swift */,
+				8B428B672BBAF97800FD1B69 /* SearchViewModel.swift */,
 			);
 			path = Search;
 			sourceTree = "<group>";
@@ -362,6 +365,7 @@
 				0412806A2AEFA91E00972552 /* SignUpViewController.swift in Sources */,
 				041280712AEFAD3D00972552 /* PhoneViewController.swift in Sources */,
 				8B428B662BBAEF0E00FD1B69 /* SearchTableViewCell.swift in Sources */,
+				8B428B682BBAF97800FD1B69 /* SearchViewModel.swift in Sources */,
 				041280262AEF9BAB00972552 /* SceneDelegate.swift in Sources */,
 				041280582AEFA05300972552 /* SignInViewModel.swift in Sources */,
 			);
