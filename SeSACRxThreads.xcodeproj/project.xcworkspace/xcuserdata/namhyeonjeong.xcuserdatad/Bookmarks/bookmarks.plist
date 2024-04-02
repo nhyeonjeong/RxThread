@@ -145,6 +145,51 @@
 			<key>type</key>
 			<string>bookmark</string>
 		</dict>
+		<dict>
+			<key>destination</key>
+			<dict>
+				<key>location-parameters</key>
+				<dict>
+					<key>EndingColumnNumber</key>
+					<string>0</string>
+					<key>EndingLineNumber</key>
+					<string>66</string>
+					<key>StartingColumnNumber</key>
+					<string>0</string>
+					<key>StartingLineNumber</key>
+					<string>65</string>
+					<key>Timestamp</key>
+					<string>733793976.535309</string>
+				</dict>
+				<key>rebasable-url</key>
+				<dict>
+					<key>base</key>
+					<string>workspace</string>
+					<key>payload</key>
+					<dict>
+						<key>relative-path</key>
+						<string>SeSACRxThreads/ShoppingList/ShoppingListViewController.swift</string>
+					</dict>
+				</dict>
+			</dict>
+			<key>text-context</key>
+			<dict>
+				<key>focused</key>
+				<string>                vc.editedTodo = { todo in
+</string>
+				<key>leading</key>
+				<string>                let vc = EditTodoViewController()
+                vc.todoText = owner.data[indexPath.row].todoText
+</string>
+				<key>trailing</key>
+				<string>                        owner.data[indexPath.row].todoText = todo
+                        owner.items.onNext(owner.data)
+                }
+</string>
+			</dict>
+			<key>type</key>
+			<string>bookmark</string>
+		</dict>
 	</array>
 </dict>
 </plist>

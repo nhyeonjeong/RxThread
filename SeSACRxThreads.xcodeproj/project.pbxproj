@@ -37,6 +37,7 @@
 		8B428B702BBC2D8700FD1B69 /* UIView+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B428B6F2BBC2D8700FD1B69 /* UIView+Extension.swift */; };
 		8B428B722BBC3F7A00FD1B69 /* ShoppingListModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B428B712BBC3F7A00FD1B69 /* ShoppingListModel.swift */; };
 		8B428B742BBC509900FD1B69 /* EditTodoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B428B732BBC509900FD1B69 /* EditTodoViewController.swift */; };
+		8B428B772BBC551E00FD1B69 /* Toast in Frameworks */ = {isa = PBXBuildFile; productRef = 8B428B762BBC551E00FD1B69 /* Toast */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -95,6 +96,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8B428B772BBC551E00FD1B69 /* Toast in Frameworks */,
 				041280602AEFA0AC00972552 /* SnapKit in Frameworks */,
 				0412805D2AEFA09E00972552 /* RxSwift in Frameworks */,
 				0412805B2AEFA09E00972552 /* RxCocoa in Frameworks */,
@@ -263,6 +265,7 @@
 				0412805A2AEFA09E00972552 /* RxCocoa */,
 				0412805C2AEFA09E00972552 /* RxSwift */,
 				0412805F2AEFA0AC00972552 /* SnapKit */,
+				8B428B762BBC551E00FD1B69 /* Toast */,
 			);
 			productName = SeSACRxThreads;
 			productReference = 041280202AEF9BAB00972552 /* SeSACRxThreads.app */;
@@ -339,6 +342,7 @@
 			packageReferences = (
 				041280592AEFA09D00972552 /* XCRemoteSwiftPackageReference "RxSwift" */,
 				0412805E2AEFA0AC00972552 /* XCRemoteSwiftPackageReference "SnapKit" */,
+				8B428B752BBC551E00FD1B69 /* XCRemoteSwiftPackageReference "Toast-Swift" */,
 			);
 			productRefGroup = 041280212AEF9BAB00972552 /* Products */;
 			projectDirPath = "";
@@ -760,6 +764,14 @@
 				minimumVersion = 5.6.0;
 			};
 		};
+		8B428B752BBC551E00FD1B69 /* XCRemoteSwiftPackageReference "Toast-Swift" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/scalessec/Toast-Swift";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.1.0;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -777,6 +789,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 0412805E2AEFA0AC00972552 /* XCRemoteSwiftPackageReference "SnapKit" */;
 			productName = SnapKit;
+		};
+		8B428B762BBC551E00FD1B69 /* Toast */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 8B428B752BBC551E00FD1B69 /* XCRemoteSwiftPackageReference "Toast-Swift" */;
+			productName = Toast;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

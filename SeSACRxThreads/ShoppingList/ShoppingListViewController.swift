@@ -39,7 +39,8 @@ class ShoppingListViewController: UIViewController {
         return view
     }()
     
-    let items = BehaviorSubject<[ShoppingListModel]>(value: [])
+    var data: [ShoppingListModel] = []
+    lazy var items = BehaviorSubject(value: data)
     let disposeBag = DisposeBag()
     
     override func viewDidLoad() {
@@ -56,11 +57,19 @@ class ShoppingListViewController: UIViewController {
             .bind(to: todoTableView.rx.items(cellIdentifier: ShoppingListTableViewCell.identifier, cellType: ShoppingListTableViewCell.self)) {(row, element, cell) in
                 cell.upgradeCell(element)
             }
+            .disposed(by: disposeBag)
         
         todoTableView.rx.itemSelected
             .bind(with: self) { owner, indexPath in
-                owner.navigationController?.pushViewController(<#T##viewController: UIViewController##UIViewController#>, animated: <#T##Bool#>)
+                let vc = EditTodoViewController()
+                vc.todoText = owner.data[indexPath.row].todoText
+                vc.editedTodo = { todo in
+                        owner.data[indexPath.row].todoText = todo
+                        owner.items.onNext(owner.data)
+                }
+                owner.navigationController?.pushViewController(vc, animated: true)
             }
+            .disposed(by: disposeBag)
     }
     
  
