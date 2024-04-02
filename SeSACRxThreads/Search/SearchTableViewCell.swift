@@ -12,7 +12,7 @@ import RxCocoa
 
 class SearchTableViewCell: UITableViewCell {
 
-    static let identifier = "SearchTableViewCell"
+//    static let identifier = "SearchTableViewCell"
     
     let appNameLabel = {
         let view = UILabel()

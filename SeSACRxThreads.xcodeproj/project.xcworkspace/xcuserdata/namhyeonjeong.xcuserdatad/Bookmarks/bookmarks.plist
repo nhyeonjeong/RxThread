@@ -18,7 +18,7 @@
 					<key>StartingLineNumber</key>
 					<string>68</string>
 					<key>Timestamp</key>
-					<string>733675943.056756</string>
+					<string>733747488.208737</string>
 				</dict>
 				<key>rebasable-url</key>
 				<dict>
@@ -108,11 +108,11 @@
 					<key>EndingLineNumber</key>
 					<string>60</string>
 					<key>StartingColumnNumber</key>
-					<string>25</string>
+					<string>0</string>
 					<key>StartingLineNumber</key>
 					<string>59</string>
 					<key>Timestamp</key>
-					<string>733675952.947208</string>
+					<string>733747485.850315</string>
 				</dict>
 				<key>rebasable-url</key>
 				<dict>
@@ -128,12 +128,12 @@
 			<key>text-context</key>
 			<dict>
 				<key>focused</key>
-				<string>y...
+				<string>                // 오류??why...
 </string>
 				<key>leading</key>
 				<string>        Observable.zip(tableView.rx.itemSelected, tableView.rx.modelSelected(String.self))
             .bind(with: self) { owner, value in
-                // 오류??wh</string>
+</string>
 				<key>trailing</key>
 				<string>//                owner.viewModel.data.remove(at: value.0.row)
 //                owner.viewModel.items.onNext(owner.data)
