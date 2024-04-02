@@ -36,6 +36,7 @@
 		8B428B6D2BBC2D5F00FD1B69 /* ShoppingListTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B428B6C2BBC2D5F00FD1B69 /* ShoppingListTableViewCell.swift */; };
 		8B428B702BBC2D8700FD1B69 /* UIView+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B428B6F2BBC2D8700FD1B69 /* UIView+Extension.swift */; };
 		8B428B722BBC3F7A00FD1B69 /* ShoppingListModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B428B712BBC3F7A00FD1B69 /* ShoppingListModel.swift */; };
+		8B428B742BBC509900FD1B69 /* EditTodoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B428B732BBC509900FD1B69 /* EditTodoViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -86,6 +87,7 @@
 		8B428B6C2BBC2D5F00FD1B69 /* ShoppingListTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShoppingListTableViewCell.swift; sourceTree = "<group>"; };
 		8B428B6F2BBC2D8700FD1B69 /* UIView+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Extension.swift"; sourceTree = "<group>"; };
 		8B428B712BBC3F7A00FD1B69 /* ShoppingListModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShoppingListModel.swift; sourceTree = "<group>"; };
+		8B428B732BBC509900FD1B69 /* EditTodoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditTodoViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -228,6 +230,7 @@
 				8B428B6A2BBC29BE00FD1B69 /* ShoppingListViewController.swift */,
 				8B428B6C2BBC2D5F00FD1B69 /* ShoppingListTableViewCell.swift */,
 				8B428B712BBC3F7A00FD1B69 /* ShoppingListModel.swift */,
+				8B428B732BBC509900FD1B69 /* EditTodoViewController.swift */,
 			);
 			path = ShoppingList;
 			sourceTree = "<group>";
@@ -385,6 +388,7 @@
 				0412806F2AEFAD2D00972552 /* BirthdayViewController.swift in Sources */,
 				041280652AEFA2F000972552 /* SignTextField.swift in Sources */,
 				0412806C2AEFABFE00972552 /* PasswordViewController.swift in Sources */,
+				8B428B742BBC509900FD1B69 /* EditTodoViewController.swift in Sources */,
 				041280562AEFA04800972552 /* SignInViewController.swift in Sources */,
 				041280282AEF9BAB00972552 /* ViewController.swift in Sources */,
 				8B428B5C2BB9BAE300FD1B69 /* SampleViewController.swift in Sources */,

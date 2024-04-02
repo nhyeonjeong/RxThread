@@ -54,7 +54,12 @@ class ShoppingListViewController: UIViewController {
     func bind() {
         items
             .bind(to: todoTableView.rx.items(cellIdentifier: ShoppingListTableViewCell.identifier, cellType: ShoppingListTableViewCell.self)) {(row, element, cell) in
-                cell.
+                cell.upgradeCell(element)
+            }
+        
+        todoTableView.rx.itemSelected
+            .bind(with: self) { owner, indexPath in
+                owner.navigationController?.pushViewController(<#T##viewController: UIViewController##UIViewController#>, animated: <#T##Bool#>)
             }
     }
     
