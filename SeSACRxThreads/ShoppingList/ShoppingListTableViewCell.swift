@@ -13,13 +13,14 @@ import RxCocoa
 class ShoppingListTableViewCell: UITableViewCell {
     let backView = {
         let view = UIView()
-        view.backgroundColor = .systemGray5
+        view.backgroundColor = .systemGray6
         view.layer.cornerRadius = 10
         return view
     }()
     
     let checkboxButton = {
         let view = UIButton()
+        view.tintColor = .black
         view.setImage(UIImage(systemName: "checkmark.square"), for: .normal)
         return view
     }()
@@ -31,6 +32,7 @@ class ShoppingListTableViewCell: UITableViewCell {
     
     let starButton = {
         let view = UIButton()
+        view.tintColor = .black
         view.setImage(UIImage(systemName: "star"), for: .normal)
         return view
     }()
@@ -56,7 +58,7 @@ class ShoppingListTableViewCell: UITableViewCell {
     private func configureConstraints() {
         backView.snp.makeConstraints { make in
             make.horizontalEdges.equalToSuperview().inset(10)
-            make.verticalEdges.equalToSuperview().inset(4)
+            make.verticalEdges.equalToSuperview().inset(2)
         }
         checkboxButton.snp.makeConstraints { make in
             make.centerY.equalToSuperview()

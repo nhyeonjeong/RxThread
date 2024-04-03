@@ -36,15 +36,18 @@ class ShoppingListViewController: UIViewController {
     let todoTableView = {
         let view = UITableView()
         view.register(ShoppingListTableViewCell.self, forCellReuseIdentifier: ShoppingListTableViewCell.identifier)
+        view.rowHeight = 50
+        view.separatorStyle = .none
         return view
     }()
     
-    var data: [ShoppingListModel] = []
+    var data: [ShoppingListModel] = [ShoppingListModel(isChecked: false, todoText: "gkgk", isFavorite: true)]
     lazy var items = BehaviorSubject(value: data)
     let disposeBag = DisposeBag()
     
     override func viewDidLoad() {
         super.viewDidLoad()
+
         bind()
         configureHierarchy()
         configureConstraints()
@@ -56,6 +59,19 @@ class ShoppingListViewController: UIViewController {
         items
             .bind(to: todoTableView.rx.items(cellIdentifier: ShoppingListTableViewCell.identifier, cellType: ShoppingListTableViewCell.self)) {(row, element, cell) in
                 cell.upgradeCell(element)
+                print("upgrade Cell \(element)")
+            }
+            .disposed(by: disposeBag)
+//        items.onNext([ShoppingListModel(isChecked: false, todoText: "gkgk", isFavorite: true)])
+        
+        // 추가버튼
+        addbutton.rx.tap
+            .bind(with: self) { owner, _ in
+                print("addbutton")
+                let newData = ShoppingListModel(isChecked: false, todoText: owner.textField.text!, isFavorite: false)
+                owner.data.append(newData)
+                owner.items.onNext(owner.data)
+                print(owner.data)
             }
             .disposed(by: disposeBag)
         
@@ -100,7 +116,7 @@ extension ShoppingListViewController {
         todoTableView.snp.makeConstraints { make in
             make.top.equalTo(textFieldView.snp.bottom).offset(8)
             make.horizontalEdges.equalTo(view.safeAreaLayoutGuide).inset(10)
-            
+            make.bottom.equalTo(view.safeAreaLayoutGuide)
         }
     }
     func configureView() {
