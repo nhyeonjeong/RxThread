@@ -40,6 +40,9 @@
 		8B428B772BBC551E00FD1B69 /* Toast in Frameworks */ = {isa = PBXBuildFile; productRef = 8B428B762BBC551E00FD1B69 /* Toast */; };
 		8B428B7F2BBD8B7D00FD1B69 /* ShoppingListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B428B7E2BBD8B7D00FD1B69 /* ShoppingListViewModel.swift */; };
 		8B428B832BBDA47800FD1B69 /* PasswordViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B428B822BBDA47800FD1B69 /* PasswordViewModel.swift */; };
+		8B428B852BBDA9C500FD1B69 /* PhoneViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B428B842BBDA9C500FD1B69 /* PhoneViewModel.swift */; };
+		8B428B872BBDA9D100FD1B69 /* BirthdayViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B428B862BBDA9D100FD1B69 /* BirthdayViewModel.swift */; };
+		8B428B892BBDA9E600FD1B69 /* SampleViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B428B882BBDA9E600FD1B69 /* SampleViewModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -93,6 +96,9 @@
 		8B428B732BBC509900FD1B69 /* EditTodoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditTodoViewController.swift; sourceTree = "<group>"; };
 		8B428B7E2BBD8B7D00FD1B69 /* ShoppingListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShoppingListViewModel.swift; sourceTree = "<group>"; };
 		8B428B822BBDA47800FD1B69 /* PasswordViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PasswordViewModel.swift; sourceTree = "<group>"; };
+		8B428B842BBDA9C500FD1B69 /* PhoneViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhoneViewModel.swift; sourceTree = "<group>"; };
+		8B428B862BBDA9D100FD1B69 /* BirthdayViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BirthdayViewModel.swift; sourceTree = "<group>"; };
+		8B428B882BBDA9E600FD1B69 /* SampleViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SampleViewModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -214,9 +220,12 @@
 			isa = PBXGroup;
 			children = (
 				0412806E2AEFAD2D00972552 /* BirthdayViewController.swift */,
+				8B428B862BBDA9D100FD1B69 /* BirthdayViewModel.swift */,
 				041280702AEFAD3D00972552 /* PhoneViewController.swift */,
+				8B428B842BBDA9C500FD1B69 /* PhoneViewModel.swift */,
 				041280722AEFAD4B00972552 /* NicknameViewController.swift */,
 				8B428B5B2BB9BAE300FD1B69 /* SampleViewController.swift */,
+				8B428B882BBDA9E600FD1B69 /* SampleViewModel.swift */,
 			);
 			path = SignUpOptional;
 			sourceTree = "<group>";
@@ -404,6 +413,9 @@
 				041280282AEF9BAB00972552 /* ViewController.swift in Sources */,
 				8B428B5C2BB9BAE300FD1B69 /* SampleViewController.swift in Sources */,
 				8B428B7F2BBD8B7D00FD1B69 /* ShoppingListViewModel.swift in Sources */,
+				8B428B892BBDA9E600FD1B69 /* SampleViewModel.swift in Sources */,
+				8B428B852BBDA9C500FD1B69 /* PhoneViewModel.swift in Sources */,
+				8B428B872BBDA9D100FD1B69 /* BirthdayViewModel.swift in Sources */,
 				041280632AEFA0CE00972552 /* PointButton.swift in Sources */,
 				8B428B6D2BBC2D5F00FD1B69 /* ShoppingListTableViewCell.swift in Sources */,
 				041280242AEF9BAB00972552 /* AppDelegate.swift in Sources */,

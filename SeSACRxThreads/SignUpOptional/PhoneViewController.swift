@@ -18,11 +18,10 @@ class PhoneViewController: UIViewController {
     let phoneTextField = SignTextField(placeholderText: "연락처를 입력해주세요")
     let nextButton = PointButton(title: "다음")
     
+    let viewModel = PhoneViewModel()
     //rx
     let disposeBag = DisposeBag()
-    let samplePhone = Observable.just("010")
-    let nextButtonObservable = BehaviorSubject(value: false)
-    let nextButtonColor = BehaviorSubject(value: UIColor.gray)
+
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -30,29 +29,22 @@ class PhoneViewController: UIViewController {
         
         configureLayout()
         
-        samplePhone
+        viewModel.samplePhone
             .bind(to: phoneTextField.rx.text)
             .disposed(by: disposeBag)
         
-        phoneTextField.rx.text
-            .bind(with: self) { owner, value in
-                guard let value else {return}
-                guard let _ = Int(value) else { return }
-                if value.count > 10 {
-                    owner.nextButtonObservable.onNext(true)
-                    owner.nextButtonColor.onNext(.systemGreen)
-                } else {
-                    owner.nextButtonObservable.onNext(false)
-                    owner.nextButtonColor.onNext(.gray)
-                }
-            }
+        phoneTextField.rx.text.orEmpty
+            .bind(to: viewModel.inputPhoneTextFieldText)
             .disposed(by: disposeBag)
         
-        nextButtonObservable
+        viewModel.outputNextButton
             .bind(to: nextButton.rx.isEnabled)
             .disposed(by: disposeBag)
-        nextButtonColor
-            .bind(to: nextButton.rx.backgroundColor)
+        
+        viewModel.outputNextButtonColor
+            .bind(with: self, onNext: { owner, value in
+                owner.nextButton.backgroundColor = value ? .systemGreen : .gray
+            })
             .disposed(by: disposeBag)
         
         // 다음화면으로
