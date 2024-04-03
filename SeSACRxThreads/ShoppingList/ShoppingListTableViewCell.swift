@@ -21,6 +21,7 @@ class ShoppingListTableViewCell: UITableViewCell {
     let checkboxButton = {
         let view = UIButton()
         view.tintColor = .black
+        view.isUserInteractionEnabled = true // ?
         view.setImage(UIImage(systemName: "checkmark.square"), for: .normal)
         return view
     }()
@@ -33,11 +34,12 @@ class ShoppingListTableViewCell: UITableViewCell {
     let starButton = {
         let view = UIButton()
         view.tintColor = .black
+        view.isUserInteractionEnabled = true
         view.setImage(UIImage(systemName: "star"), for: .normal)
         return view
     }()
     
-    let disposeBag = DisposeBag()
+    var disposeBag = DisposeBag()
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -49,7 +51,10 @@ class ShoppingListTableViewCell: UITableViewCell {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        disposeBag = DisposeBag() // 재사용할때마다 구독을 끊고 새로 초기화~
+    }
     private func configureHierarchy() {
         backView.addView([checkboxButton, todoLabel, starButton])
         addSubview(backView)

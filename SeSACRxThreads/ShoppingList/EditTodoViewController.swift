@@ -25,6 +25,7 @@ class EditTodoViewController: UIViewController {
     let disposeBag = DisposeBag()
     override func viewDidLoad() {
         super.viewDidLoad()
+        view.backgroundColor = .white
         setNavigationBar()
         view.addSubview(textField)
         
@@ -41,7 +42,7 @@ class EditTodoViewController: UIViewController {
                     owner.view.makeToast("수정할 투두를 입력하세요", duration: 1.0, position: .top)
                 } else {
                     owner.editedTodo?(text) // 뭐라도 작성되어있다면 뒤로 dismiss
-                    owner.dismiss(animated: true)
+                    owner.navigationController?.popViewController(animated: true)
                 }
             }
             .disposed(by: disposeBag)

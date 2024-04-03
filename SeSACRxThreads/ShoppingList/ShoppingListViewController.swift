@@ -41,7 +41,7 @@ class ShoppingListViewController: UIViewController {
         return view
     }()
     
-    var data: [ShoppingListModel] = [ShoppingListModel(isChecked: false, todoText: "gkgk", isFavorite: true)]
+    var data: [ShoppingListModel] = []
     lazy var items = BehaviorSubject(value: data)
     let disposeBag = DisposeBag()
     
@@ -59,10 +59,24 @@ class ShoppingListViewController: UIViewController {
         items
             .bind(to: todoTableView.rx.items(cellIdentifier: ShoppingListTableViewCell.identifier, cellType: ShoppingListTableViewCell.self)) {(row, element, cell) in
                 cell.upgradeCell(element)
-                print("upgrade Cell \(element)")
+                // 체크박스 누르면 해제...
+                cell.checkboxButton.rx.tap
+                    .bind(with: self) { owner, _ in
+                        print("click checkbox")
+                        owner.data[row].isChecked.toggle()
+                        owner.data.remove(at: row)
+                        owner.items.onNext(owner.data)
+                    }
+                    .disposed(by: cell.disposeBag)
+                // 즐겨찾기 누르면 즐겨찾기
+                cell.starButton.rx.tap
+                    .bind(with: self) { owner, _ in
+                        print("click starbutton")
+                        owner.data[row].isFavorite.toggle()
+                    }
+                    .disposed(by: cell.disposeBag)
             }
             .disposed(by: disposeBag)
-//        items.onNext([ShoppingListModel(isChecked: false, todoText: "gkgk", isFavorite: true)])
         
         // 추가버튼
         addbutton.rx.tap
@@ -71,7 +85,8 @@ class ShoppingListViewController: UIViewController {
                 let newData = ShoppingListModel(isChecked: false, todoText: owner.textField.text!, isFavorite: false)
                 owner.data.append(newData)
                 owner.items.onNext(owner.data)
-                print(owner.data)
+                // 검색글자 지우기
+                owner.textField.text = ""
             }
             .disposed(by: disposeBag)
         
@@ -86,6 +101,17 @@ class ShoppingListViewController: UIViewController {
                 owner.navigationController?.pushViewController(vc, animated: true)
             }
             .disposed(by: disposeBag)
+        
+        // 실시간 검색
+        textField.rx.text.orEmpty
+            .debounce(.seconds(1), scheduler: MainScheduler.instance)
+            .distinctUntilChanged()
+            .subscribe(with: self) { owner, value in
+                let result = value.isEmpty ? owner.data : owner.data.filter{ $0.todoText.contains(value)}
+                owner.items.onNext(result)
+            }
+            .disposed(by: disposeBag)
+        
     }
     
  
@@ -115,8 +141,7 @@ extension ShoppingListViewController {
         }
         todoTableView.snp.makeConstraints { make in
             make.top.equalTo(textFieldView.snp.bottom).offset(8)
-            make.horizontalEdges.equalTo(view.safeAreaLayoutGuide).inset(10)
-            make.bottom.equalTo(view.safeAreaLayoutGuide)
+            make.horizontalEdges.bottom.equalTo(view.safeAreaLayoutGuide)
         }
     }
     func configureView() {
