@@ -73,6 +73,7 @@ class ShoppingListViewController: UIViewController {
                     .bind(with: self) { owner, _ in
                         print("click starbutton")
                         owner.data[row].isFavorite.toggle()
+                        owner.items.onNext(owner.data)
                     }
                     .disposed(by: cell.disposeBag)
             }
@@ -86,7 +87,7 @@ class ShoppingListViewController: UIViewController {
                 owner.data.append(newData)
                 owner.items.onNext(owner.data)
                 // 검색글자 지우기
-                owner.textField.text = ""
+//                owner.textField.text = ""
             }
             .disposed(by: disposeBag)
         

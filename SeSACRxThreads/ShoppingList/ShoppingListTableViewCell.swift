@@ -57,7 +57,7 @@ class ShoppingListTableViewCell: UITableViewCell {
     }
     private func configureHierarchy() {
         backView.addView([checkboxButton, todoLabel, starButton])
-        addSubview(backView)
+        contentView.addSubview(backView)
     }
     
     private func configureConstraints() {
