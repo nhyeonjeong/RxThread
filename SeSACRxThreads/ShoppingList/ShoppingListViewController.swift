@@ -10,7 +10,7 @@ import SnapKit
 import RxSwift
 import RxCocoa
 
-class ShoppingListViewController: UIViewController {
+final class ShoppingListViewController: UIViewController {
     let textFieldView = {
         let view = UIView()
         view.backgroundColor = .systemGray6
@@ -40,9 +40,7 @@ class ShoppingListViewController: UIViewController {
         view.separatorStyle = .none
         return view
     }()
-    
-    var data: [ShoppingListModel] = []
-    lazy var items = BehaviorSubject(value: data)
+    let viewModel = ShoppingListViewModel()
     let disposeBag = DisposeBag()
     
     override func viewDidLoad() {
@@ -56,48 +54,39 @@ class ShoppingListViewController: UIViewController {
     }
     
     func bind() {
-        items
+        viewModel.items
+//            .asDriver()
             .bind(to: todoTableView.rx.items(cellIdentifier: ShoppingListTableViewCell.identifier, cellType: ShoppingListTableViewCell.self)) {(row, element, cell) in
-                cell.upgradeCell(element)
+                
+                cell.upgradeCell(element) // 위에서 drive를 쓰면 오류나느 이유?
                 // 체크박스 누르면 해제...
                 cell.checkboxButton.rx.tap
-                    .bind(with: self) { owner, _ in
-                        print("click checkbox")
-                        owner.data[row].isChecked.toggle()
-                        owner.data.remove(at: row)
-                        owner.items.onNext(owner.data)
-                    }
+                    .map{ row }
+                    .bind(to: self.viewModel.checkboxButtonTap) // 왜 .drive로 하면 안되는지,,?
                     .disposed(by: cell.disposeBag)
                 // 즐겨찾기 누르면 즐겨찾기
                 cell.starButton.rx.tap
-                    .bind(with: self) { owner, _ in
-                        print("click starbutton")
-                        owner.data[row].isFavorite.toggle()
-                        owner.items.onNext(owner.data)
-                    }
+                    .map{ row }
+                    .bind(to: self.viewModel.favoriteButtonTap)
                     .disposed(by: cell.disposeBag)
+
             }
             .disposed(by: disposeBag)
         
         // 추가버튼
         addbutton.rx.tap
-            .bind(with: self) { owner, _ in
-                print("addbutton")
-                let newData = ShoppingListModel(isChecked: false, todoText: owner.textField.text!, isFavorite: false)
-                owner.data.append(newData)
-                owner.items.onNext(owner.data)
-                // 검색글자 지우기
-//                owner.textField.text = ""
-            }
+            .map{ self.textField.text! }
+            .bind(to: viewModel.addButtonTap)
             .disposed(by: disposeBag)
         
+        // 화면 전환 - VC에 있어야 될 듯
         todoTableView.rx.itemSelected
             .bind(with: self) { owner, indexPath in
                 let vc = EditTodoViewController()
-                vc.todoText = owner.data[indexPath.row].todoText
+                vc.todoText = owner.viewModel.data[indexPath.row].todoText
                 vc.editedTodo = { todo in
-                        owner.data[indexPath.row].todoText = todo
-                        owner.items.onNext(owner.data)
+                    owner.viewModel.data[indexPath.row].todoText = todo
+                    owner.viewModel.items.accept(owner.viewModel.data)
                 }
                 owner.navigationController?.pushViewController(vc, animated: true)
             }
@@ -105,17 +94,23 @@ class ShoppingListViewController: UIViewController {
         
         // 실시간 검색
         textField.rx.text.orEmpty
-            .debounce(.seconds(1), scheduler: MainScheduler.instance)
-            .distinctUntilChanged()
-            .subscribe(with: self) { owner, value in
-                let result = value.isEmpty ? owner.data : owner.data.filter{ $0.todoText.contains(value)}
-                owner.items.onNext(result)
-            }
+        // 아래 두 줄이 viewModel로 가야 addbutton을 눌렀을 대 textfieldRelay에 이벤트를 보낼때도
+        // 1초를 기다릴 수 있음
+//            .debounce(.seconds(1), scheduler: MainScheduler.instance)
+//            .distinctUntilChanged()
+            .bind(to: viewModel.textFieldRelay)
             .disposed(by: disposeBag)
         
+        // addbutton누르면 textfield는 빈 칸으로, item에도 이벤트 전달
+        viewModel.addButtonOutput
+            .asDriver(onErrorJustReturn: ())
+            .drive(with: self) { owner, _ in
+                owner.textField.text = ""
+                // owner.viewModel.items.accept(owner.viewModel.data) // 전체 다 나오게 하기
+                owner.viewModel.textFieldRelay.accept("")
+            }
+            .disposed(by: disposeBag)
     }
-    
- 
 }
 
 extension ShoppingListViewController {

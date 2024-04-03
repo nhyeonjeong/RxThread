@@ -38,6 +38,7 @@
 		8B428B722BBC3F7A00FD1B69 /* ShoppingListModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B428B712BBC3F7A00FD1B69 /* ShoppingListModel.swift */; };
 		8B428B742BBC509900FD1B69 /* EditTodoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B428B732BBC509900FD1B69 /* EditTodoViewController.swift */; };
 		8B428B772BBC551E00FD1B69 /* Toast in Frameworks */ = {isa = PBXBuildFile; productRef = 8B428B762BBC551E00FD1B69 /* Toast */; };
+		8B428B7F2BBD8B7D00FD1B69 /* ShoppingListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B428B7E2BBD8B7D00FD1B69 /* ShoppingListViewModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -89,6 +90,7 @@
 		8B428B6F2BBC2D8700FD1B69 /* UIView+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Extension.swift"; sourceTree = "<group>"; };
 		8B428B712BBC3F7A00FD1B69 /* ShoppingListModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShoppingListModel.swift; sourceTree = "<group>"; };
 		8B428B732BBC509900FD1B69 /* EditTodoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditTodoViewController.swift; sourceTree = "<group>"; };
+		8B428B7E2BBD8B7D00FD1B69 /* ShoppingListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShoppingListViewModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -230,6 +232,7 @@
 			isa = PBXGroup;
 			children = (
 				8B428B6A2BBC29BE00FD1B69 /* ShoppingListViewController.swift */,
+				8B428B7E2BBD8B7D00FD1B69 /* ShoppingListViewModel.swift */,
 				8B428B6C2BBC2D5F00FD1B69 /* ShoppingListTableViewCell.swift */,
 				8B428B712BBC3F7A00FD1B69 /* ShoppingListModel.swift */,
 				8B428B732BBC509900FD1B69 /* EditTodoViewController.swift */,
@@ -396,6 +399,7 @@
 				041280562AEFA04800972552 /* SignInViewController.swift in Sources */,
 				041280282AEF9BAB00972552 /* ViewController.swift in Sources */,
 				8B428B5C2BB9BAE300FD1B69 /* SampleViewController.swift in Sources */,
+				8B428B7F2BBD8B7D00FD1B69 /* ShoppingListViewModel.swift in Sources */,
 				041280632AEFA0CE00972552 /* PointButton.swift in Sources */,
 				8B428B6D2BBC2D5F00FD1B69 /* ShoppingListTableViewCell.swift in Sources */,
 				041280242AEF9BAB00972552 /* AppDelegate.swift in Sources */,
