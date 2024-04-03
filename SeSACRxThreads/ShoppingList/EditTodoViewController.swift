@@ -22,7 +22,9 @@ class EditTodoViewController: UIViewController {
         view.placeholder = "할 일을 수정하세요"
         return view
     }()
-    let disposeBag = DisposeBag()
+    
+    var disposeBag = DisposeBag()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
@@ -46,6 +48,7 @@ class EditTodoViewController: UIViewController {
                 }
             }
             .disposed(by: disposeBag)
+        disposeBag = DisposeBag() // 구독 끊어주기 -> 안 끊어주면 수정버튼을 한 번 눌린 뒤로 textfield에 한글자라도 입력하면 이전 화면으로 돌아감;
     }
     private func setNavigationBar() {
         let button = UIBarButtonItem(title: "수정", style: .plain, target: self, action: #selector(editButtonClicked))
