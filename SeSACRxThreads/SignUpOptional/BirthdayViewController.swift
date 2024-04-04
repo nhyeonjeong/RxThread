@@ -11,13 +11,6 @@ import RxSwift
 import RxCocoa
 
 class BirthdayViewController: UIViewController {
-    let year = PublishSubject<Int>()
-    let month = PublishSubject<Int>()
-    let day = PublishSubject<Int>()
-    let infoObservable = PublishSubject<Bool>()
-    let nextButtonObservable = PublishSubject<Bool>()
-    let disposeBag = DisposeBag()
-    
     let birthDayPicker: UIDatePicker = {
         let picker = UIDatePicker()
         picker.datePickerMode = .date
@@ -73,6 +66,9 @@ class BirthdayViewController: UIViewController {
     }()
   
     let nextButton = PointButton(title: "가입하기")
+
+    let disposeBag = DisposeBag()
+    let viewModel = BirthdayViewModel()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -84,32 +80,31 @@ class BirthdayViewController: UIViewController {
         nextButton.addTarget(self, action: #selector(nextButtonClicked), for: .touchUpInside)
     }
     func bind() {
-        year
+        viewModel.outputYear
             .map{ "\($0)년"}
             .bind(to: yearLabel.rx.text)
             .disposed(by: disposeBag)
         
-        month
+        viewModel.outputMonth
             .map{ "\($0)월"}
             .bind(to: monthLabel.rx.text)
             .disposed(by: disposeBag)
         
-        day
+        viewModel.outputDay
             .map{ "\($0)일"}
             .bind(to: dayLabel.rx.text)
             .disposed(by: disposeBag)
         
         // infoLabel
-        infoObservable
+        viewModel.outputInfoValidation
             .bind(with: self, onNext: { owner, value in
-                
                 owner.infoLabel.text = value ? "가입 가능한 나이입니다" : "만 17세 이상만 가입 가능합니다"
                 owner.infoLabel.textColor = value ? .systemBlue : .systemRed
                 
             })
             .disposed(by: disposeBag)
         
-        nextButtonObservable
+        viewModel.outputNextButton
             .bind(with: self) { owner, value in
                 owner.nextButton.isEnabled = value
                 owner.nextButton.backgroundColor = value ? .systemBlue : .lightGray
@@ -117,24 +112,7 @@ class BirthdayViewController: UIViewController {
             .disposed(by: disposeBag)
         
         birthDayPicker.rx.date
-            .bind(with: self) { owner, date in
-                let component = Calendar.current.dateComponents([.year, .month, .day], from: date)
-                owner.year.onNext(component.year!)
-                owner.month.onNext(component.month!)
-                owner.day.onNext(component.day!)
-                
-            
-                // 만 17세 계산
-                let today = Calendar.current.startOfDay(for: Date())
-                let todayComponent = Calendar.current.dateComponents([.year], from: date, to: today)
-                if todayComponent.year! < 17 {
-                    owner.infoObservable.onNext(false)
-                    owner.nextButtonObservable.onNext(false)
-                } else {
-                    owner.infoObservable.onNext(true)
-                    owner.nextButtonObservable.onNext(true)
-                }
-            }
+            .bind(to: viewModel.inputDatePicker)
             .disposed(by: disposeBag)
         
         nextButton.rx.tap
