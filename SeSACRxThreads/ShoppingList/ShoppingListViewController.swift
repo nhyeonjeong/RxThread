@@ -52,7 +52,8 @@ final class ShoppingListViewController: UIViewController {
         configureView()
         setNavigationItem()
     }
-    
+    /*
+     // input output pattern 도입 전
     func bind() {
         viewModel.items
 //            .asDriver()
@@ -110,6 +111,38 @@ final class ShoppingListViewController: UIViewController {
                 owner.viewModel.textFieldRelay.accept("")
             }
             .disposed(by: disposeBag)
+    }
+     */
+    
+    
+    // input output pattern 사용 후
+    func bind() {
+//        
+//        let input = ShoppingListViewModel.Input(checkboxButton: ,
+//                                                favoriteButton: <#T##ControlEvent<Int>#>,
+//                                                addButton: <#T##ControlEvent<String>#>,
+//                                                searchTextField: <#T##ControlProperty<String>#>)
+//        
+//        let output = viewModel.transform(input: input)
+//        
+//        output.tableViewItems
+//            .drive(to: todoTableView.rx.items(cellIdentifier: ShoppingListTableViewCell.identifier, cellType: ShoppingListTableViewCell.self)) {(row, element, cell) in
+//                
+//                cell.upgradeCell(element) // 위에서 drive를 쓰면 오류나느 이유?
+//                // 체크박스 누르면 해제...
+//                cell.checkboxButton.rx.tap
+//                    .map{ row }
+//                    .bind(to: self.viewModel.checkboxButtonTap) // 왜 .drive로 하면 안되는지,,?
+//                    .disposed(by: cell.disposeBag)
+//                // 즐겨찾기 누르면 즐겨찾기
+//                cell.starButton.rx.tap
+//                    .map{ row }
+//                    .bind(to: self.viewModel.favoriteButtonTap)
+//                    .disposed(by: cell.disposeBag)
+//
+//            }
+//            .disposed(by: disposeBag)
+        
     }
 }
 

@@ -9,6 +9,8 @@ import Foundation
 import RxSwift
 import RxCocoa
 
+// input output pattern 전
+/*
 final class ShoppingListViewModel {
     var data: [ShoppingListModel] = []
     let disposeBag = DisposeBag()
@@ -72,4 +74,28 @@ final class ShoppingListViewModel {
             }
             .disposed(by: disposeBag)
     }
+}
+*/
+
+// 후
+final class ShoppingListViewModel {
+    var data: [ShoppingListModel] = []
+    let disposeBag = DisposeBag()
+    struct Input {
+        let checkboxButton: ControlEvent<Int>
+        let favoriteButton: ControlEvent<Int>
+        let addButton: ControlEvent<String>
+        let searchTextField: ControlProperty<String>
+    }
+    
+    struct Output {
+        let tableViewItems: Driver<[ShoppingListModel]>
+        let addButton: Driver<Void>
+    }
+    
+//    func transform(input: Input) -> Output {
+//        
+//    }
+    
+    
 }

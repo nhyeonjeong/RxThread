@@ -153,13 +153,13 @@
 					<key>EndingColumnNumber</key>
 					<string>0</string>
 					<key>EndingLineNumber</key>
-					<string>87</string>
+					<string>88</string>
 					<key>StartingColumnNumber</key>
 					<string>0</string>
 					<key>StartingLineNumber</key>
-					<string>86</string>
+					<string>87</string>
 					<key>Timestamp</key>
-					<string>733846551.9701411</string>
+					<string>733929040.254401</string>
 				</dict>
 				<key>rebasable-url</key>
 				<dict>
@@ -241,15 +241,15 @@
 				<key>location-parameters</key>
 				<dict>
 					<key>EndingColumnNumber</key>
-					<string>45</string>
+					<string>0</string>
 					<key>EndingLineNumber</key>
-					<string>78</string>
+					<string>80</string>
 					<key>StartingColumnNumber</key>
-					<string>45</string>
+					<string>0</string>
 					<key>StartingLineNumber</key>
-					<string>78</string>
+					<string>79</string>
 					<key>Timestamp</key>
-					<string>733848209.712611</string>
+					<string>733929040.254423</string>
 				</dict>
 				<key>rebasable-url</key>
 				<dict>
@@ -265,15 +265,16 @@
 			<key>text-context</key>
 			<dict>
 				<key>focused</key>
-				<string></string>
+				<string>            .bind(to: viewModel.addButtonTap)
+</string>
 				<key>leading</key>
 				<string>        addbutton.rx.tap
             .map{ self.textField.text! }
-            .bind(to: viewModel.addButtonTap)</string>
+</string>
 				<key>trailing</key>
-				<string>
-            .disposed(by: disposeBag)
+				<string>            .disposed(by: disposeBag)
         
+        // 화면 전환 - VC에 있어야 될 듯
 </string>
 			</dict>
 			<key>type</key>
@@ -287,13 +288,13 @@
 					<key>EndingColumnNumber</key>
 					<string>0</string>
 					<key>EndingLineNumber</key>
-					<string>65</string>
+					<string>66</string>
 					<key>StartingColumnNumber</key>
 					<string>0</string>
 					<key>StartingLineNumber</key>
-					<string>64</string>
+					<string>65</string>
 					<key>Timestamp</key>
-					<string>733845765.956912</string>
+					<string>733929040.2544301</string>
 				</dict>
 				<key>rebasable-url</key>
 				<dict>
@@ -330,15 +331,15 @@
 				<key>location-parameters</key>
 				<dict>
 					<key>EndingColumnNumber</key>
-					<string>55</string>
+					<string>0</string>
 					<key>EndingLineNumber</key>
-					<string>60</string>
+					<string>62</string>
 					<key>StartingColumnNumber</key>
-					<string>53</string>
+					<string>0</string>
 					<key>StartingLineNumber</key>
-					<string>60</string>
+					<string>61</string>
 					<key>Timestamp</key>
-					<string>733846195.138016</string>
+					<string>733929040.254438</string>
 				</dict>
 				<key>rebasable-url</key>
 				<dict>
@@ -354,15 +355,16 @@
 			<key>text-context</key>
 			<dict>
 				<key>focused</key>
-				<string>e를</string>
+				<string>                cell.upgradeCell(element) // 위에서 drive를 쓰면 오류나느 이유?
+</string>
 				<key>leading</key>
 				<string>            .bind(to: todoTableView.rx.items(cellIdentifier: ShoppingListTableViewCell.identifier, cellType: ShoppingListTableViewCell.self)) {(row, element, cell) in
                 
-                cell.upgradeCell(element) // 위에서 driv</string>
+</string>
 				<key>trailing</key>
-				<string> 쓰면 오류나느 이유?
-                // 체크박스 누르면 해제...
+				<string>                // 체크박스 누르면 해제...
                 cell.checkboxButton.rx.tap
+                    .map{ row }
 </string>
 			</dict>
 			<key>type</key>

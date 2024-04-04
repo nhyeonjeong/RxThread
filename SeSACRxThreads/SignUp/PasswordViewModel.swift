@@ -9,6 +9,7 @@ import Foundation
 import RxSwift
 import RxCocoa
 
+/*
 final class PasswordViewModel {
     
     // input
@@ -40,4 +41,28 @@ final class PasswordViewModel {
             }
             .disposed(by: disposeBag)
     }
+}
+*/
+
+// input output pattern
+final class PasswordViewModel {
+    struct Input {
+        let textfield: ControlProperty<String?>
+    }
+    
+    struct Output {
+        let isValid: Driver<Bool>
+    }
+    
+    func transform(input: Input) -> Output {
+        
+        let isValid = input.textfield
+            .orEmpty
+            .map{ $0.count < 16 && $0.count > 6 }
+            .asDriver(onErrorJustReturn: false) // 에러가 발생하면 클릭되지 않도록
+        
+        return Output(isValid: isValid)
+    }
+    
+    
 }

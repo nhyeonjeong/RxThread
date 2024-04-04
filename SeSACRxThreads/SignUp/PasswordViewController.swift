@@ -26,7 +26,11 @@ class PasswordViewController: UIViewController {
         
         configureLayout()
          
-        
+        bind()
+    }
+    
+    /*
+    func bind() {
         // textfield.text의 글자수에 따른 nextButton.isEnabled변경
         passwordTextField.rx.text.orEmpty
             .bind(to: viewModel.textFieldRelay)
@@ -50,6 +54,28 @@ class PasswordViewController: UIViewController {
         nextButton.rx.tap
             .bind(with: self) { owner, _ in
                 owner.navigationController?.pushViewController(PhoneViewController(), animated: true)
+            }
+            .disposed(by: disposeBag)
+    }
+    */
+    
+    // input output pattern
+    func bind() {
+        // viewModel로 안보내줘도 될 것 같다
+        nextButton.rx.tap
+            .asDriver()
+            .drive(with: self) { owner, _ in
+                owner.navigationController?.pushViewController(PhoneViewController(), animated: true)
+            }
+            .disposed(by: disposeBag)
+        
+        let input = PasswordViewModel.Input(textfield: passwordTextField.rx.text)
+        
+        let output = viewModel.transform(input: input)
+        output.isValid
+            .drive(with: self) { owner, value in
+                owner.nextButton.backgroundColor = value ? .systemGreen : .gray
+                owner.nextButton.isEnabled = value
             }
             .disposed(by: disposeBag)
         
