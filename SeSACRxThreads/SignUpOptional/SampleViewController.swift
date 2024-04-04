@@ -24,9 +24,8 @@ class SampleViewController: UIViewController {
         return view
     }()
     
+    let viewModel = SampleViewModel()
     let disposeBag = DisposeBag()
-//    var tableList: [String] = []
-    let tableListSubject = BehaviorSubject(value: [])
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -39,24 +38,12 @@ class SampleViewController: UIViewController {
     
     func bind() {
         addButton.rx.tap
-            .bind(with: self) { owner, _ in
-                guard let text = owner.textField.text else {
-                    return
-                }
-                // ?
-                do {
-                    var list = try owner.tableListSubject.value()
-                    list.append(text)
-                    owner.tableListSubject.onNext(list)
-                } catch {
-                    print(error)
-                }
-            }
+            .map{ self.textField.text! }
+            .bind(to: viewModel.inputAddButtonTap)
             .disposed(by: disposeBag)
         
-        tableListSubject
+        viewModel.items
             .bind(to: tableView.rx.items) { (tableView, row, element) in
-                print("w4oitw;r")
                 guard let cell = tableView.dequeueReusableCell(withIdentifier: "Cell") else { return UITableViewCell() }
                 cell.textLabel?.text = "\(element) @ row \(row)"
                 return cell
@@ -64,16 +51,8 @@ class SampleViewController: UIViewController {
             .disposed(by: disposeBag)
         
         tableView.rx.itemSelected // indexPath기준
-            .bind(with: self, onNext: { owner, indexPath in
-                print(indexPath)
-                do {
-                    var list = try owner.tableListSubject.value()
-                    list.remove(at: indexPath.row)
-                    owner.tableListSubject.onNext(list)
-                } catch {
-                    print(error)
-                }
-            })
+            .map{ $0.row }
+            .bind(to: viewModel.inputItemSelected)
             .disposed(by: disposeBag)
     }
     func configureHierarchy() {
