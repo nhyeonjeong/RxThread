@@ -29,6 +29,10 @@ class PhoneViewController: UIViewController {
         
         configureLayout()
         
+        bind()
+    }
+    /*
+    func bind() {
         viewModel.samplePhone
             .bind(to: phoneTextField.rx.text)
             .disposed(by: disposeBag)
@@ -52,6 +56,32 @@ class PhoneViewController: UIViewController {
             .bind(with: self) { owner, _ in
                 owner.navigationController?.pushViewController(NicknameViewController(), animated: true)
             }
+            .disposed(by: disposeBag)
+    }
+    */
+    
+    // input output pattern
+    func bind() {
+    
+        nextButton.rx.tap
+            .asDriver()
+            .drive(with: self) { owner, _ in
+                owner.navigationController?.pushViewController(NicknameViewController(), animated: true)
+            }
+            .disposed(by: disposeBag)
+        
+        let input = PhoneViewModel.Input(textfield: phoneTextField.rx.text)
+        
+        let output = viewModel.transform(input: input)
+        output.isValid
+            .asDriver()
+            .drive(with: self) { owner, value in
+                owner.nextButton.isEnabled = value
+                owner.nextButton.backgroundColor = value ? .systemGreen : .gray
+            }
+            .disposed(by: disposeBag)
+        output.sampleText
+            .drive(phoneTextField.rx.text)
             .disposed(by: disposeBag)
     }
     

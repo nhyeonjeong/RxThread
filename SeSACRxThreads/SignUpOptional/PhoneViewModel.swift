@@ -8,7 +8,7 @@
 import Foundation
 import RxSwift
 import RxCocoa
-
+/*
 final class PhoneViewModel {
     // input
     let inputPhoneTextFieldText = PublishRelay<String>()
@@ -38,5 +38,30 @@ final class PhoneViewModel {
                 }
             }
             .disposed(by: disposeBag)
+    }
+}
+*/
+
+// input output pattern
+final class PhoneViewModel {
+    struct Input {
+        let textfield: ControlProperty<String?>
+    }
+    
+    struct Output {
+        let sampleText: Driver<String>
+        let isValid: Driver<Bool>
+    }
+    
+    func transform(input: Input) -> Output {
+        let isValid = input.textfield
+            .orEmpty
+            .asDriver()
+            .map{ Int($0) != nil && $0.count > 10 }
+        // 제일 처음에 띄어줄 "010"
+        let sampleText = Observable.just("010")
+            .asDriver(onErrorJustReturn: "")
+        
+        return Output(sampleText: sampleText, isValid: isValid)
     }
 }
