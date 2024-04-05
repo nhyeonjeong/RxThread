@@ -81,21 +81,37 @@ final class ShoppingListViewModel {
 final class ShoppingListViewModel {
     var data: [ShoppingListModel] = []
     let disposeBag = DisposeBag()
+    
+    // 체크박스 버튼 눌렀을 때
+    let checkboxButtonTap: PublishRelay<Int> = PublishRelay()
+    // 즐겨찾기 버튼 눌렀을 때
+    let favoriteButtonTap: PublishRelay<Int> = PublishRelay()
+    
     struct Input {
-        let checkboxButton: ControlEvent<Int>
-        let favoriteButton: ControlEvent<Int>
-        let addButton: ControlEvent<String>
-        let searchTextField: ControlProperty<String>
+//        let checkboxButton: ControlEvent<Int>
+//        let favoriteButton: ControlEvent<Int>
+        let addButton: Observable<String>
+        let searchTextField: ControlProperty<String?>
     }
     
     struct Output {
         let tableViewItems: Driver<[ShoppingListModel]>
-        let addButton: Driver<Void>
     }
     
-//    func transform(input: Input) -> Output {
-//        
-//    }
+    func transform(input: Input) -> Output {
+        let tableViewItems = PublishRelay<[ShoppingListModel]>()
+        
+        // 추가 버튼 눌렀을 때
+        let addbutton = input.addButton
+            .subscribe(with: self) { owner, text in
+                
+                let newData = ShoppingListModel(isChecked: false, todoText: text, isFavorite: false)
+                owner.data.append(newData)
+                tableViewItems.accept(owner.data)
+                
+            }
+        return Output(tableViewItems: tableViewItems.asDriver(onErrorJustReturn: data))
+    }
     
     
 }

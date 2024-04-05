@@ -37,7 +37,7 @@ class BirthdayViewController: UIViewController {
     
     let yearLabel: UILabel = {
        let label = UILabel()
-        label.text = "2023년"
+//        label.text = "2023년"
         label.textColor = Color.black
         label.snp.makeConstraints {
             $0.width.equalTo(100)
@@ -47,7 +47,7 @@ class BirthdayViewController: UIViewController {
     
     let monthLabel: UILabel = {
        let label = UILabel()
-        label.text = "33월"
+//        label.text = "33월"
         label.textColor = Color.black
         label.snp.makeConstraints {
             $0.width.equalTo(100)
@@ -57,7 +57,7 @@ class BirthdayViewController: UIViewController {
     
     let dayLabel: UILabel = {
        let label = UILabel()
-        label.text = "99일"
+//        label.text = "99일"
         label.textColor = Color.black
         label.snp.makeConstraints {
             $0.width.equalTo(100)
@@ -77,8 +77,9 @@ class BirthdayViewController: UIViewController {
         
         configureLayout()
         bind()
-        nextButton.addTarget(self, action: #selector(nextButtonClicked), for: .touchUpInside)
+        
     }
+    /*
     func bind() {
         viewModel.outputYear
             .map{ "\($0)년"}
@@ -121,6 +122,40 @@ class BirthdayViewController: UIViewController {
             }
             .disposed(by: disposeBag)
         
+    }
+    */
+    
+    // input output pattern
+    func bind() {
+        
+        nextButton.rx.tap
+            .bind(with: self) { owner, _ in
+                owner.navigationController?.pushViewController(SampleViewController(), animated: true)
+            }
+            .disposed(by: disposeBag)
+        
+        var input = BirthdayViewModel.Input(datePicker: birthDayPicker.rx.date)
+        let output = viewModel.transform(input: input)
+        output.year
+            .drive(yearLabel.rx.text)
+            .disposed(by: disposeBag)
+        output.month
+            .drive(monthLabel.rx.text)
+            .disposed(by: disposeBag)
+        output.day
+            .drive(dayLabel.rx.text)
+            .disposed(by: disposeBag)
+        
+        output.isValid
+            .drive(with: self) { owner, value in
+                owner.nextButton.isEnabled = value
+                owner.nextButton.backgroundColor = value ? .systemBlue : .lightGray
+                owner.infoLabel.textColor = value ? .systemBlue : .systemRed
+                owner.infoLabel.text = value ? "가입 가능한 나이입니다" : "만 17세 이상만 가입 가능합니다"
+            }
+            .disposed(by: disposeBag)
+        
+        input.datePicker = birthDayPicker.rx.date // 제일 처음부터 반응
     }
     
     @objc func nextButtonClicked() {
