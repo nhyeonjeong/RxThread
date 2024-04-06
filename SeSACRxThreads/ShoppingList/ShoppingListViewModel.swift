@@ -91,7 +91,9 @@ final class ShoppingListViewModel {
     }
     
     struct Output {
-        let tableViewItems: Driver<[ShoppingListModel]>
+        // 이벤트를 받을 일 없으니까 Drive(Observable)
+        // 수정) -> 뷰컨쪽에서 화면전환했다가 다시 돌아올 때 이벤트를 전달하고 있으므로 받으려면 BehaviorRelay가 나을듯
+        let tableViewItems: BehaviorRelay<[ShoppingListModel]>
     }
     
     func transform(input: Input) -> Output {
@@ -123,7 +125,7 @@ final class ShoppingListViewModel {
             }
             .disposed(by: disposeBag)
         
-        return Output(tableViewItems: tableViewItems.asDriver(onErrorJustReturn: data))
+        return Output(tableViewItems: tableViewItems)
     }
     
     

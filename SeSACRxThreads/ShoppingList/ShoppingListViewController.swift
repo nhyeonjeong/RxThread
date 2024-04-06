@@ -130,7 +130,7 @@ final class ShoppingListViewController: UIViewController {
         
         // 테이블뷰 그리기
         output.tableViewItems
-            .drive(todoTableView.rx.items(cellIdentifier: ShoppingListTableViewCell.identifier, cellType: ShoppingListTableViewCell.self)) {(row, element, cell) in
+            .bind(to: todoTableView.rx.items(cellIdentifier: ShoppingListTableViewCell.identifier, cellType: ShoppingListTableViewCell.self)) {(row, element, cell) in
                 print("output.tableViewItems")
                 cell.upgradeCell(element)
                 // 체크박스 누르면 해제...
@@ -152,18 +152,20 @@ final class ShoppingListViewController: UIViewController {
             }
             .disposed(by: disposeBag)
         
-//        todoTableView.rx.itemSelected
-//            .drive(with: self) { owner, indexPath in
-//                let vc = EditTodoViewController()
-//                vc.todoText = owner.viewModel.data[indexPath.row].todoText
-//                vc.editedTodo = { todo in
-//                    owner.viewModel.data[indexPath.row].todoText = todo
-//                    output.tableViewItems.accept(owner.viewModel.data)
-//                }
-//                owner.navigationController?.pushViewController(vc, animated: true)
-//            }
-//            .disposed(by: disposeBag)
-//        
+        todoTableView.rx.itemSelected
+            .subscribe(with: self) { owner, indexPath in
+                // 화면 전환?..
+                let vc = EditTodoViewController()
+                vc.todoText = owner.viewModel.data[indexPath.row].todoText
+                vc.editedTodo = { todo in
+                    owner.viewModel.data[indexPath.row].todoText = todo
+                    // 여기서 TableViewItems에게 이벤트를 전달해야하므로 뷰모델에 Driver로 썼던 거 BehaviorRelay로 수정
+                    output.tableViewItems.accept(owner.viewModel.data)
+                }
+                owner.navigationController?.pushViewController(vc, animated: true)
+            }
+            .disposed(by: disposeBag)
+        
         
     }
      
