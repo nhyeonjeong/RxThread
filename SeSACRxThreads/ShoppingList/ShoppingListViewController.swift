@@ -46,7 +46,7 @@ final class ShoppingListViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        bind()
+//        bind()
         configureHierarchy()
         configureConstraints()
         configureView()
@@ -116,9 +116,10 @@ final class ShoppingListViewController: UIViewController {
     
     
     // input output pattern 사용 후
+    /*
     func bind() {
         let text = addbutton.rx.tap.map{ self.textField.text! }
-        let input = ShoppingListViewModel.Input(addButton: addbutton.rx.tap.map{self.textField.text!},
+        var input = ShoppingListViewModel.Input(checkboxButton: nil, favoriteButton: nil, addButton: addbutton.rx.tap.map{self.textField.text!},
                                                 searchTextField: textField.rx.text)
         
         let output = viewModel.transform(input: input)
@@ -128,20 +129,36 @@ final class ShoppingListViewController: UIViewController {
                 
                 cell.upgradeCell(element) // 위에서 drive를 쓰면 오류나느 이유?
                 // 체크박스 누르면 해제...
-                cell.checkboxButton.rx.tap
-                    .map{ row }
-                    .bind(to: self.viewModel.checkboxButtonTap) // 왜 .drive로 하면 안되는지,,?
-                    .disposed(by: cell.disposeBag)
-                // 즐겨찾기 누르면 즐겨찾기
-                cell.starButton.rx.tap
-                    .map{ row }
-                    .bind(to: self.viewModel.favoriteButtonTap)
-                    .disposed(by: cell.disposeBag)
+//                cell.checkboxButton.rx.tap
+//                    .map{ row }
+//                    .bind(to: input.checkboxButton.)
+//                    .disposed(by: cell.disposeBag)
+//                // 즐겨찾기 누르면 즐겨찾기
+//                cell.starButton.rx.tap
+//                    .map{ row }
+//                    .bind(to: self.viewModel.favoriteButtonTap)
+//                    .disposed(by: cell.disposeBag)
 
+                input.checkboxButton = cell.checkboxButton.rx.tap.map{row}
+                input.favoriteButton = cell.starButton.rx.tap.map{row}
             }
             .disposed(by: disposeBag)
         
+        todoTableView.rx.itemSelected
+            .drive(with: self) { owner, indexPath in
+                let vc = EditTodoViewController()
+                vc.todoText = owner.viewModel.data[indexPath.row].todoText
+                vc.editedTodo = { todo in
+                    owner.viewModel.data[indexPath.row].todoText = todo
+                    output.tableViewItems.accept(owner.viewModel.data)
+                }
+                owner.navigationController?.pushViewController(vc, animated: true)
+            }
+            .disposed(by: disposeBag)
+        
+        
     }
+     */
 }
 
 extension ShoppingListViewController {

@@ -43,6 +43,12 @@
 		8B428B852BBDA9C500FD1B69 /* PhoneViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B428B842BBDA9C500FD1B69 /* PhoneViewModel.swift */; };
 		8B428B872BBDA9D100FD1B69 /* BirthdayViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B428B862BBDA9D100FD1B69 /* BirthdayViewModel.swift */; };
 		8B428B892BBDA9E600FD1B69 /* SampleViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B428B882BBDA9E600FD1B69 /* SampleViewModel.swift */; };
+		8B428B9E2BC0CC8600FD1B69 /* BoxOfficeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B428B9D2BC0CC8600FD1B69 /* BoxOfficeViewModel.swift */; };
+		8B428BA02BC0CC9700FD1B69 /* BoxOfficeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B428B9F2BC0CC9700FD1B69 /* BoxOfficeViewController.swift */; };
+		8B428BA22BC0CD0C00FD1B69 /* Movie.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B428BA12BC0CD0C00FD1B69 /* Movie.swift */; };
+		8B428BA42BC0CD1300FD1B69 /* Network.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B428BA32BC0CD1300FD1B69 /* Network.swift */; };
+		8B428BA62BC0CD1800FD1B69 /* MovieCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B428BA52BC0CD1800FD1B69 /* MovieCollectionViewCell.swift */; };
+		8B428BA82BC0CD1C00FD1B69 /* ShareViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B428BA72BC0CD1C00FD1B69 /* ShareViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -99,6 +105,12 @@
 		8B428B842BBDA9C500FD1B69 /* PhoneViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhoneViewModel.swift; sourceTree = "<group>"; };
 		8B428B862BBDA9D100FD1B69 /* BirthdayViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BirthdayViewModel.swift; sourceTree = "<group>"; };
 		8B428B882BBDA9E600FD1B69 /* SampleViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SampleViewModel.swift; sourceTree = "<group>"; };
+		8B428B9D2BC0CC8600FD1B69 /* BoxOfficeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoxOfficeViewModel.swift; sourceTree = "<group>"; };
+		8B428B9F2BC0CC9700FD1B69 /* BoxOfficeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoxOfficeViewController.swift; sourceTree = "<group>"; };
+		8B428BA12BC0CD0C00FD1B69 /* Movie.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Movie.swift; sourceTree = "<group>"; };
+		8B428BA32BC0CD1300FD1B69 /* Network.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Network.swift; sourceTree = "<group>"; };
+		8B428BA52BC0CD1800FD1B69 /* MovieCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MovieCollectionViewCell.swift; sourceTree = "<group>"; };
+		8B428BA72BC0CD1C00FD1B69 /* ShareViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShareViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -153,6 +165,7 @@
 		041280222AEF9BAB00972552 /* SeSACRxThreads */ = {
 			isa = PBXGroup;
 			children = (
+				8B428B9C2BC0CC7700FD1B69 /* BoxOffice */,
 				8B428B6E2BBC2D6F00FD1B69 /* Extension */,
 				8B428B692BBC23A500FD1B69 /* ShoppingList */,
 				8B428B622BBAEED000FD1B69 /* Search */,
@@ -258,6 +271,19 @@
 				8B428B6F2BBC2D8700FD1B69 /* UIView+Extension.swift */,
 			);
 			path = Extension;
+			sourceTree = "<group>";
+		};
+		8B428B9C2BC0CC7700FD1B69 /* BoxOffice */ = {
+			isa = PBXGroup;
+			children = (
+				8B428BA72BC0CD1C00FD1B69 /* ShareViewController.swift */,
+				8B428BA52BC0CD1800FD1B69 /* MovieCollectionViewCell.swift */,
+				8B428BA32BC0CD1300FD1B69 /* Network.swift */,
+				8B428BA12BC0CD0C00FD1B69 /* Movie.swift */,
+				8B428B9D2BC0CC8600FD1B69 /* BoxOfficeViewModel.swift */,
+				8B428B9F2BC0CC9700FD1B69 /* BoxOfficeViewController.swift */,
+			);
+			path = BoxOffice;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -401,18 +427,23 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8B428B9E2BC0CC8600FD1B69 /* BoxOfficeViewModel.swift in Sources */,
 				8B428B642BBAEEE800FD1B69 /* SearchViewController.swift in Sources */,
 				8B428B832BBDA47800FD1B69 /* PasswordViewModel.swift in Sources */,
 				041280782AF1D14000972552 /* Resource.swift in Sources */,
 				8B428B702BBC2D8700FD1B69 /* UIView+Extension.swift in Sources */,
+				8B428BA02BC0CC9700FD1B69 /* BoxOfficeViewController.swift in Sources */,
 				0412806F2AEFAD2D00972552 /* BirthdayViewController.swift in Sources */,
 				041280652AEFA2F000972552 /* SignTextField.swift in Sources */,
+				8B428BA42BC0CD1300FD1B69 /* Network.swift in Sources */,
 				0412806C2AEFABFE00972552 /* PasswordViewController.swift in Sources */,
 				8B428B742BBC509900FD1B69 /* EditTodoViewController.swift in Sources */,
 				041280562AEFA04800972552 /* SignInViewController.swift in Sources */,
+				8B428BA82BC0CD1C00FD1B69 /* ShareViewController.swift in Sources */,
 				041280282AEF9BAB00972552 /* ViewController.swift in Sources */,
 				8B428B5C2BB9BAE300FD1B69 /* SampleViewController.swift in Sources */,
 				8B428B7F2BBD8B7D00FD1B69 /* ShoppingListViewModel.swift in Sources */,
+				8B428BA22BC0CD0C00FD1B69 /* Movie.swift in Sources */,
 				8B428B892BBDA9E600FD1B69 /* SampleViewModel.swift in Sources */,
 				8B428B852BBDA9C500FD1B69 /* PhoneViewModel.swift in Sources */,
 				8B428B872BBDA9D100FD1B69 /* BirthdayViewModel.swift in Sources */,
@@ -428,6 +459,7 @@
 				8B428B682BBAF97800FD1B69 /* SearchViewModel.swift in Sources */,
 				041280262AEF9BAB00972552 /* SceneDelegate.swift in Sources */,
 				041280582AEFA05300972552 /* SignInViewModel.swift in Sources */,
+				8B428BA62BC0CD1800FD1B69 /* MovieCollectionViewCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

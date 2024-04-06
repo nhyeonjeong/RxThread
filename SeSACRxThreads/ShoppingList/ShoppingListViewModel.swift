@@ -88,8 +88,8 @@ final class ShoppingListViewModel {
     let favoriteButtonTap: PublishRelay<Int> = PublishRelay()
     
     struct Input {
-//        let checkboxButton: ControlEvent<Int>
-//        let favoriteButton: ControlEvent<Int>
+        var checkboxButton: ControlEvent<Int>?
+        var favoriteButton: ControlEvent<Int>?
         let addButton: Observable<String>
         let searchTextField: ControlProperty<String?>
     }
@@ -100,6 +100,23 @@ final class ShoppingListViewModel {
     
     func transform(input: Input) -> Output {
         let tableViewItems = PublishRelay<[ShoppingListModel]>()
+        
+        input.checkboxButton?
+            .asDriver()
+            .drive(with: self, onNext: { owner, row in
+                owner.data.remove(at: row)
+                tableViewItems.accept(owner.data)
+            })
+            .disposed(by: disposeBag)
+        
+        
+        input.favoriteButton?
+            .asDriver()
+            .drive(with: self, onNext: { owner, row in
+                owner.data[row].isFavorite.toggle()
+                tableViewItems.accept(owner.data)
+            })
+            .disposed(by: disposeBag)
         
         // 추가 버튼 눌렀을 때
         let addbutton = input.addButton
