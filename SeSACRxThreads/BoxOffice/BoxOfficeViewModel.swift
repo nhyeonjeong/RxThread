@@ -29,7 +29,7 @@ final class BoxOfficeViewModel {
     
     struct Output {
         // 검색버튼을 클릭하면 tableview에 나타낼 observer
-        let movie: PublishSubject<[DailyBoxOfficeList]> // 네트워크 통신과 결합할 요소라 relay보다 subject가 더 낫다(error, completed등의 이벤트를 뱉어야 될 수도 있으니까?..) / 이벤트를 전달받아야되니까 Subject
+        let movie: PublishSubject<[DailyBoxOfficeList]> // 네트워크 통신과 결합할 요소라 relay보다 subject가 더 낫다(error, completed등의 이벤트를 받아야 될 수도 있으니까?..) / 이벤트를 전달받아야되니까 Subject
         
         // 컬렉션뷰 이벤트
         // output에 보낼때는 Observable의 역할만 하는 것으로 보내도 될듯? -> Driver의 타입으로 바꿔주기

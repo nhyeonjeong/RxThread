@@ -82,15 +82,11 @@ final class ShoppingListViewModel {
     var data: [ShoppingListModel] = []
     let disposeBag = DisposeBag()
     
-    // 체크박스 버튼 눌렀을 때
-    let checkboxButtonTap: PublishRelay<Int> = PublishRelay()
-    // 즐겨찾기 버튼 눌렀을 때
-    let favoriteButtonTap: PublishRelay<Int> = PublishRelay()
-    
     struct Input {
-        var checkboxButton: ControlEvent<Int>?
-        var favoriteButton: ControlEvent<Int>?
-        let addButton: Observable<String>
+        // 셀이 있어야 클릭도 되는 것. 이벤트를 받기도 하니까 subject (row도 같이 가지고 온다)
+        var checkboxButton: PublishSubject<Int>
+        var favoriteButton: PublishSubject<Int>
+        let addButton: ControlEvent<Void>
         let searchTextField: ControlProperty<String?>
     }
     
@@ -99,34 +95,34 @@ final class ShoppingListViewModel {
     }
     
     func transform(input: Input) -> Output {
-        let tableViewItems = PublishRelay<[ShoppingListModel]>()
-        
-        input.checkboxButton?
-            .asDriver()
-            .drive(with: self, onNext: { owner, row in
+        let tableViewItems = BehaviorRelay<[ShoppingListModel]>(value: data) // 이벤트를 받아야하니까, UI에 최적화위해 Relay
+        // 체크박스 눌렀을 때
+        input.checkboxButton
+            .subscribe(with: self, onNext: { owner, row in
                 owner.data.remove(at: row)
                 tableViewItems.accept(owner.data)
             })
             .disposed(by: disposeBag)
         
-        
-        input.favoriteButton?
-            .asDriver()
-            .drive(with: self, onNext: { owner, row in
+        // 즐겨찾기 눌렀을 때
+        input.favoriteButton
+            .subscribe(with: self, onNext: { owner, row in
                 owner.data[row].isFavorite.toggle()
                 tableViewItems.accept(owner.data)
             })
             .disposed(by: disposeBag)
         
         // 추가 버튼 눌렀을 때
-        let addbutton = input.addButton
+        input.addButton
+            .withLatestFrom(input.searchTextField.orEmpty) // 받아온 Textfield글자 옵셔널 벗기기
             .subscribe(with: self) { owner, text in
-                
                 let newData = ShoppingListModel(isChecked: false, todoText: text, isFavorite: false)
                 owner.data.append(newData)
                 tableViewItems.accept(owner.data)
                 
             }
+            .disposed(by: disposeBag)
+        
         return Output(tableViewItems: tableViewItems.asDriver(onErrorJustReturn: data))
     }
     
