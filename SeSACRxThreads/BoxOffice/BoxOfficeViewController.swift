@@ -26,14 +26,17 @@ class BoxOfficeViewController: UIViewController {
     }
     
     func bind() {
-        
+
         // input도 미리 recentText는 하나 만들어서 보내주기
         // 셀에서 선택했을 때 글자이다
         // itemSelected에서 이벤트를 보내줘야 하니까 만들어준다.
         // 뷰모델에서도 Input에 작성했던 것처럼 Observable<String>타입을 만들기 위해 create사용
-        let recentText = Observable<String>.create { observer in
-            return Disposables.create()
-        }
+        // 수정)-> publishSubject가 맞는 것 같아서 수정
+//        let recentText = Observable<String>.create { observer in
+//            return Disposables.create()
+//        }
+        let recentText = PublishSubject<String>()
+        
         let input = BoxOfficeViewModel.Input(searchText: searchBar.rx.text,
                                               recentText: recentText,
                                               searchButtonTap: searchBar.rx.searchButtonClicked)
@@ -47,7 +50,22 @@ class BoxOfficeViewController: UIViewController {
             }
             .disposed(by: disposeBag)
         
+        // 컬렉션뷰에 보여질 선택한 글자 이벤트 보내기
+        Observable.zip(tableView.rx.modelSelected(DailyBoxOfficeList.self),
+                       tableView.rx.itemSelected)
+        .map{ $0.0.movieNm }
+        .subscribe(with: self) { owner, value in
+            print(value)
+            recentText.onNext(value)
+        }
+        .disposed(by: disposeBag)
         
+        // 컬렉션뷰를 그리자(넘어오는 것은 Observable)
+        output.recent
+            .drive(collectionView.rx.items(cellIdentifier: MovieCollectionViewCell.identifier, cellType: MovieCollectionViewCell.self)) { (row, element, cell) in
+                cell.label.text = "\(element) @ row \(row) \(element)"
+            }
+            .disposed(by: disposeBag)
     }
     
     func configure() {
