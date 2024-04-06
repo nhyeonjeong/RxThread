@@ -167,6 +167,14 @@ final class ShoppingListViewController: UIViewController {
                 owner.navigationController?.pushViewController(vc, animated: true)
             }
             .disposed(by: disposeBag)
+        
+        addbutton.rx.tap
+            .asDriver()
+            .drive(with: self) { owner, _ in
+                owner.textField.text = ""
+//                input.searchTextField = ""
+            }
+            .disposed(by: disposeBag)
     }
 }
 

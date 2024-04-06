@@ -125,6 +125,16 @@ final class ShoppingListViewModel {
             }
             .disposed(by: disposeBag)
         
+        // 실시간 검색
+        input.searchTextField.orEmpty
+            .debounce(.seconds(1), scheduler: MainScheduler.instance) // 멈추고 1초 뒤에 검색
+            .distinctUntilChanged() // 바로 이전과 겹치면 검색안하기
+            .subscribe(with: self) { owner, text in
+                let result = text == "" ? owner.data : owner.data.filter{ $0.todoText.contains(text)}
+                tableViewItems.accept(result)
+            }
+            .disposed(by: disposeBag)
+        
         return Output(tableViewItems: tableViewItems)
     }
     
