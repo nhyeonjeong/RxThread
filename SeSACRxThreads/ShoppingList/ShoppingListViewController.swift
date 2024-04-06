@@ -138,6 +138,7 @@ final class ShoppingListViewController: UIViewController {
                     .map{ row }
                     .subscribe(with: self, onNext: { owner, row in
                         print("checkbox Clicked")
+                        checkboxButton.onNext(row)
                     })
                     .disposed(by: cell.disposeBag)
                 
@@ -146,6 +147,7 @@ final class ShoppingListViewController: UIViewController {
                     .map{ row }
                     .subscribe(with: self, onNext: { owner, row in
                         print("favorite Clicked")
+                        favoriteButton.onNext(row)
                     })
                     .disposed(by: cell.disposeBag)
 
@@ -165,10 +167,7 @@ final class ShoppingListViewController: UIViewController {
                 owner.navigationController?.pushViewController(vc, animated: true)
             }
             .disposed(by: disposeBag)
-        
-        
     }
-     
 }
 
 extension ShoppingListViewController {
