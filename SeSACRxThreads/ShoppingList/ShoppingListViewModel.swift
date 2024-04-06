@@ -81,7 +81,10 @@ final class ShoppingListViewModel {
 final class ShoppingListViewModel {
     var data: [ShoppingListModel] = []
     let disposeBag = DisposeBag()
+    var disposeBag2 = DisposeBag()
     
+    // 다른 함수에서도 사용하기 위해서 그냥 전역으로 뻈다
+    lazy var tableViewItems = BehaviorRelay<[ShoppingListModel]>(value: data) // 이벤트를 받아야하니까, UI에 최적화위해 Relay
     struct Input {
         // 셀이 있어야 클릭도 되는 것. 이벤트를 받기도 하니까 subject (row도 같이 가지고 온다)
         var checkboxButton: PublishSubject<Int>
@@ -97,12 +100,16 @@ final class ShoppingListViewModel {
     }
     
     func transform(input: Input) -> Output {
-        let tableViewItems = BehaviorRelay<[ShoppingListModel]>(value: data) // 이벤트를 받아야하니까, UI에 최적화위해 Relay
+        
+        // addButton을 눌러서 textfield가 ""이 되면 ""으로 다시 검색하는 이벤트를 받아야 한다.
+        // 수정) ControlProperty에서 PublishSubject로 변경
+//        let searchTextField = PublishRelay<String?>()
+        
         // 체크박스 눌렀을 때
         input.checkboxButton
             .subscribe(with: self, onNext: { owner, row in
                 owner.data.remove(at: row)
-                tableViewItems.accept(owner.data)
+                owner.tableViewItems.accept(owner.data)
             })
             .disposed(by: disposeBag)
         
@@ -110,7 +117,7 @@ final class ShoppingListViewModel {
         input.favoriteButton
             .subscribe(with: self, onNext: { owner, row in
                 owner.data[row].isFavorite.toggle()
-                tableViewItems.accept(owner.data)
+                owner.tableViewItems.accept(owner.data)
             })
             .disposed(by: disposeBag)
         
@@ -118,25 +125,40 @@ final class ShoppingListViewModel {
         input.addButton
             .withLatestFrom(input.searchTextField.orEmpty) // 받아온 Textfield글자 옵셔널 벗기기
             .subscribe(with: self) { owner, text in
+                owner.disposeBag2 = DisposeBag() // 끊기,,? 되나?
+                
                 let newData = ShoppingListModel(isChecked: false, todoText: text, isFavorite: false)
                 owner.data.append(newData)
-                tableViewItems.accept(owner.data)
-                
+                owner.tableViewItems.accept(owner.data)
+//
+//                // 추가하면 textfield는 ""이 되니까 ""로 다시 검색해야함
+//                searchTextField.accept("")
+//                
+                // 다시 disposeBag2를 연결
+                owner.subscribeSearchTextField(input.searchTextField)
             }
             .disposed(by: disposeBag)
         
+//        searchTextField
+//            .asDriver(onErrorJustReturn: "")
+//            .dri
+//        
+        
+        subscribeSearchTextField(input.searchTextField)
+
+        return Output(tableViewItems: tableViewItems)
+    }
+    func subscribeSearchTextField(_ observable: ControlProperty<String?>) {
         // 실시간 검색
-        input.searchTextField.orEmpty
+        observable.orEmpty
             .debounce(.seconds(1), scheduler: MainScheduler.instance) // 멈추고 1초 뒤에 검색
             .distinctUntilChanged() // 바로 이전과 겹치면 검색안하기
             .subscribe(with: self) { owner, text in
                 let result = text == "" ? owner.data : owner.data.filter{ $0.todoText.contains(text)}
-                tableViewItems.accept(result)
+                owner.tableViewItems.accept(result)
             }
-            .disposed(by: disposeBag)
+            .disposed(by: disposeBag2)
         
-        return Output(tableViewItems: tableViewItems)
     }
-    
     
 }
