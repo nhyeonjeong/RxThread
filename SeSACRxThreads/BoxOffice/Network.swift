@@ -13,6 +13,20 @@ enum APIError: Error {
     case invalidURL
     case unknownResponse
     case statusError
+    case decodeError
+    
+    var errorMessage: String {
+        switch self {
+        case .invalidURL :
+            return "URL이 올바르지 않습니다"
+        case .unknownResponse:
+            return "통신 오류"
+        case .statusError:
+            return "상태코드 오류"
+        case .decodeError:
+            return "데이터를 불러오는데 실패했습니다(디코딩에러)"
+        }
+    }
 }
 
 class BoxOfficeNetwork {
@@ -72,7 +86,7 @@ class BoxOfficeNetwork {
                     observer.onCompleted() // 중첩 구독을 막기 위해
                 } else {
                     print("응답은 왔으나 디코딩 실패")
-                    observer.onError(APIError.unknownResponse)
+                    observer.onError(APIError.decodeError)
                 }
             }.resume()
             

@@ -66,6 +66,11 @@ class BoxOfficeViewController: UIViewController {
                 cell.label.text = "\(element) @ row \(row) \(element)"
             }
             .disposed(by: disposeBag)
+        
+        output.errorMessage
+            .drive(with: self) { owner, message in
+                owner.view.makeToast(message, duration: 1.0, position: .top)
+            }
     }
     
     func configure() {

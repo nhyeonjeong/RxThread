@@ -34,6 +34,7 @@ final class BoxOfficeViewModel {
         // 컬렉션뷰 이벤트
         // output에 보낼때는 Observable의 역할만 하는 것으로 보내도 될듯? -> Driver의 타입으로 바꿔주기
         let recent: Driver<[String]>
+        let errorMessage: Driver<String>
         
     }
     
@@ -43,7 +44,7 @@ final class BoxOfficeViewModel {
         
         // 뷰모델에서 이벤트를 받고 뷰컨에서 구독을 해야하니까 relay(UI를 그리는 거니까 Relay)
         let recentList = BehaviorRelay(value: recent)
-        
+        let errorMessage = PublishRelay<String>()
         // 검색버큰 클릭하면?
         input.searchButtonTap
             .throttle(.seconds(1), scheduler: MainScheduler.instance)
@@ -55,6 +56,10 @@ final class BoxOfficeViewModel {
             .map{String($0)}
             .flatMap {
                 BoxOfficeNetwork.fetchBoxOfficeData(date: $0)
+                    .catch { error in
+                        let error = error as! APIError
+                        errorMessage.accept(error.errorMessage)
+                    }
             }
             .subscribe(with: self) { owner, value in
                 let data = value.boxOfficeResult.dailyBoxOfficeList
